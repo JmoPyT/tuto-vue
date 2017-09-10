@@ -53,6 +53,23 @@
             <input v-model="message">
         </div>
 
+        <!-- APP 7 -->
+        <div id="app-7" class='app-style'>
+            <ol>
+                <!--
+                Maintenant nous fournissons à chaque todo-item l'objet todo
+                qu'il représente de manière à ce que son contenu puisse être dynamique.
+                Nous avons également besoin de fournir à chaque composant une « clé »,
+                mais nous expliquerons cela plus tard.
+                -->
+                <todo-item
+                v-for="item in groceryList"
+                v-bind:todo="item"
+                v-bind:key="item.id">
+                </todo-item>
+            </ol>
+        </div>
+
         <script type="text/javascript">
             // 1 - rendu déclaratif
             var app = new Vue({
@@ -108,6 +125,22 @@
                 el: '#app-6',
                 data: {
                     message: 'Hello Vue !'
+                }
+            })
+
+            //7 - composant
+            Vue.component('todo-item', {
+                props: ['todo'],
+                template: '<li>{{ todo.text }} - {{ todo.id }}</li>'
+            })
+            var app7 = new Vue({
+                el: '#app-7',
+                data: {
+                    groceryList: [
+                        { id: 0, text: 'Légumes' },
+                        { id: 1, text: 'Fromage' },
+                        { id: 2, text: 'Tout ce que les humains sont supposés manger' }
+                    ]
                 }
             })
         </script>
