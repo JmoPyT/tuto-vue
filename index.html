@@ -47,6 +47,12 @@
             <button v-on:click="reverseMessage">Message retourné</button>
         </div>
 
+        <!-- APP 6 -->
+        <div id="app-6" class='app-style'>
+            <p>{{ message }}</p>
+            <input v-model="message">
+        </div>
+
         <script type="text/javascript">
             // 1 - rendu déclaratif
             var app = new Vue({
@@ -94,6 +100,14 @@
                     reverseMessage: function () {
                         this.message = this.message.split('').reverse().join('')
                     }
+                }
+            })
+
+            //6 -v-model: liaison de données bidirectionnelle
+            var app6 = new Vue({
+                el: '#app-6',
+                data: {
+                    message: 'Hello Vue !'
                 }
             })
         </script>
