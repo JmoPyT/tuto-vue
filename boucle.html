@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Test vue.js</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script type="text/javascript" src="./vue.js"></script>
+
+        <style type="text/css">
+            ul
+            {
+                margin: 0;
+                padding: 0;
+            }
+            .app-style
+            {
+                border: 1px solid #ddd;
+                padding: 3px;
+                margin-bottom: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <ul id="tuto" class='app-style'>
+            <li v-for="value in items">
+                {{value}}
+            </li>
+        </ul>
+
+        <ul id="tuto2" class='app-style'>
+            <li v-for="(value, index) in fruits">
+                {{ index }} => {{ value }}
+            </li>
+        </ul>
+
+        <ul id="tuto3" class='app-style'>
+            <li v-for="(value, index) in fruits" @click="getFruit(index)">
+                {{ index }} => {{ value }}
+            </li>
+        </ul>
+
+        <table class="table table-bordered">
+            <caption>Personnes</caption>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                </tr>
+            </thead>
+            <tbody id="tuto4">
+                <tr v-for="personne in personnes">
+                    <td>{{ personne.nom }}</td>
+                    <td>{{ personne.prenom }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul id="tuto5" class='app-style'>
+            <li v-for="(value, key) in personne">
+                {{ key }} => {{ value }}
+            </li>
+        </ul>
+
+        <script type="text/javascript">
+            new Vue({
+                el: '#tuto',
+                data: {
+                    items: [
+                    "Je suis l'item 1",
+                    "Je suis l'item 2",
+                    "Je suis l'item 3"
+                    ]
+                }
+            });
+
+            new Vue({
+                el: '#tuto2',
+                data: {
+                    fruits: [
+                        'pomme',
+                        'cerise',
+                        'abricot'
+                    ]
+                }
+            });
+
+
+            new Vue({
+                el: '#tuto3',
+                data: {
+                    fruits: [
+                        'pomme',
+                        'cerise',
+                        'abricot'
+                    ]
+                },
+                methods: {
+                    getFruit: function(index) {
+                    alert('Je suis ' + this.fruits[index]);
+                    }
+                }
+            });
+
+            var vm4 = new Vue({
+                el: '#tuto4',
+                data: {
+                    personnes: [
+                        {nom: "Durand", prenom: "Jacques"},
+                        {nom: "Dupont", prenom: "Albert"},
+                        {nom: "Martin", prenom: "Denis"},
+                    ]
+                }
+            });
+
+            // setTimeout(function(){vm4.personnes.push({nom: "Claret", prenom: "Marcel"});}, 2000);
+            // setTimeout(function(){vm4.personnes.pop();}, 4000);
+            // setTimeout(function(){vm4.personnes.unshift({nom: "Claret", prenom: "Marcel"});}, 6000);
+            // setTimeout(function(){vm4.personnes.shift();}, 8000);
+            // setTimeout(function(){vm4.personnes.splice(1, 1, {nom: "Claret", prenom: "Marcel"});}, 10000);
+            // setTimeout(function(){vm4.personnes.sort(function (a, b) { return (a.nom > b.nom) });}, 12000);
+            // setTimeout(function(){vm4.personnes.reverse();}, 14000);
+
+            setTimeout(function() {
+                vm4.personnes = vm4.personnes.concat([
+                    {nom: "Claret", prenom: "Marcel"},
+                    {nom: "Verlou", prenom: "Gustave"}
+                ]);
+            }, 2000);
+            setTimeout(function(){vm4.personnes = vm4.personnes.slice(1, 4);}, 4000);
+
+            new Vue({
+                el: '#tuto5',
+                data: {
+                    personne: {
+                        nom: "Durand",
+                        prenom: "Jacques"
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
