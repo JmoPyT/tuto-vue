@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Test vue.js</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script type="text/javascript" src="./vue.js"></script>
+
+    </head>
+    <body>
+        <form id="tuto">
+            <input type="text" v-model="texte"><p>{{ texte }}</p>
+        </form>
+
+        <form id="tuto2">
+            <div class="radio">
+                <label>
+                    <input type="radio" name="sexe" value="male" v-model="sexe"> Male
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="sexe" value="femelle" v-model="sexe"> Femelle
+                </label>
+            </div>
+            <div class="form-control">
+                On a choisi {{ sexe }}
+            </div>
+        </form>
+
+        <form id="tuto3">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="nom" value="valeur" v-model="checked"> Je suis <strong>{{ checked }}</strong>
+                </label>
+            </div>
+        </form>
+
+        <form id="tuto4">
+            <select class="form-control" v-model="choix">
+                <option>Choix 1</option>
+                <option>Choix 2</option>
+                <option>Choix 3</option>
+            </select>
+            <p>On a choisi "{{ choix }}"</p>
+        </form>
+
+
+        <form id="tuto5">
+            <select class="form-control" v-model="choix" multiple>
+                <option>Choix 1</option>
+                <option>Choix 2</option>
+                <option>Choix 3</option>
+            </select>
+            <p>On a choisi "{{ choix }}"</p>
+        </form>
+
+        <form id="tuto6">
+            <select class="form-control" v-model="choix" multiple>
+                <option v-for="option in options" :value="option.value">
+                    {{ option.text }}
+                </option>
+            </select>
+            <p>On a choisi "{{ choix }}"</p>
+        </form>
+
+        <script type="text/javascript">
+        var vm = new Vue({
+            el: '#tuto',
+            data: { texte: 'coucou' }
+        });
+        setTimeout(function(){ vm.texte = 'Nouveau texte'; }, 2000);
+
+        new Vue({
+            el: '#tuto2',
+            data: { sexe: 'male' }
+        });
+
+        new Vue({
+            el: '#tuto3',
+            data: { checked: false }
+        });
+
+        new Vue({
+            el: '#tuto4',
+            data: { choix: 'Choix 2' }
+        });
+
+        new Vue({
+            el: '#tuto5',
+            data: { choix: ['Choix 2', 'Choix 3'] }
+        });
+
+        var vm6 = new Vue({
+            el: '#tuto6',
+            data: {
+                choix: [1, 3],
+                options: [
+                    { text: 'Choix 1', value: '1' },
+                    { text: 'Choix 2', value: '2' },
+                    { text: 'Choix 3', value: '3' }
+                ],
+            }
+        });
+
+        setTimeout(function(){ Vue.set(vm6.options, 1, { text: 'Choix 2a', value: '2a' })}, 2000);
+        </script>
+    </body>
+</html>
