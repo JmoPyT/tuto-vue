@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Test vue.js</title>
+        <script type="text/javascript" src="./vue.js"></script>
+    </head>
+
+    <body>
+        <form id="tuto">
+            <div class="form-group">
+                <input type="texte" class="form-control" v-model="nomComplet">
+            </div>
+            <p>Le nom est : {{ responsable.nom }}</p>
+            <p>Le prénom est : {{ responsable.prenom }}</p>
+            <p>Le responsable est {{ nomComplet }}.</p>
+        </form>
+
+        <script>
+            var vm = new Vue({
+                el: '#tuto',
+                data: {
+                    responsable: {nom: "Claret", prenom: "Marcel"}
+                },
+                computed: {
+                    nomComplet: {
+                        get: function () {
+                            return this.responsable.nom + ' ' + this.responsable.prenom;
+                        },
+                        set: function (value) {
+                            var nom = value.split(' ');
+                            this.responsable.nom = nom[0];
+                            this.responsable.prenom = nom[1];
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
