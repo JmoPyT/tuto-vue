@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Test vue.js - Composant 1</title>
+        <script type="text/javascript" src="./vue.js"></script>
+    </head>
+
+    <body>
+        <div id="tuto">
+            <input v-model="nomSaisi">
+            <br>
+            <nom :nom="nomSaisi"></nom>
+        </div>
+
+        <div id="tuto2">
+            <liste v-for="personne in personnes" :personne="personne"></liste>
+        </div>
+
+
+        <div id="tuto3">
+            <tableau :personnes="personnes"></tableau>
+        </div>
+
+        <template id="tableau-template">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th v-for="value in colonnes">
+                            {{ value }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="ligne in lignes">
+                        <td v-for="value in ligne">
+                            {{ value }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
+
+        <div id="tuto4">
+            <tableau :colonnes="colonnes" :lignes="personnes"></tableau>
+        </div>
+
+        <script>
+            Vue.component('nom', {
+                props: ['nom'],
+                template: '<p>Mon nom est <strong>{{nom}}</strong></p>'
+            });
+
+            new Vue({
+                el: '#tuto',
+                data: { nomSaisi: '' }
+            });
+
+            new Vue({
+                el: '#tuto2',
+                data: {
+                    personnes: [
+                    {nom: "Durand", prenom: "Jacques"},
+                    {nom: "Dupont", prenom: "Albert"},
+                    {nom: "Martin", prenom: "Denis"},
+                    ]
+                },
+                components: {
+                    'liste': {
+                    props: ['personne'],
+                    template: '<li>{{personne.nom}} {{personne.prenom}}</li>'
+                    }
+                }
+            });
+
+
+            var vm = new Vue({
+                el: '#tuto3',
+                data: {
+                    personnes: [
+                    {nom: "Durand", prenom: "Jacques"},
+                    {nom: "Dupont", prenom: "Albert"},
+                    {nom: "Martin", prenom: "Denis"},
+                    ]
+                },
+                components: {
+                    tableau: {
+                    props: ['personnes'],
+                    template: '<table class="table table-bordered">\n' +
+                        '<tr v-for="personne in personnes">\n' +
+                        '<td v-text="personne.nom"></td>\n' +
+                        '<td v-text="personne.prenom"></td>\n' +
+                        '</tr>\n' +
+                        '</table>\n'
+                    }
+                }
+            });
+            setTimeout(function() {
+                Vue.set(vm.personnes, 1, {nom: "Claret", prenom: "Marcel"});
+            }, 2000);
+
+            Vue.component('tableau', {
+                props: ['colonnes', 'lignes'],
+                template: '#tableau-template'
+            });
+
+            new Vue({
+                el: '#tuto4',
+                data: {
+                    colonnes: ['Nom', 'Prénom'],
+                    personnes: [
+                    ["Durand", "Jacques"],
+                    ["Dupont", "Albert"],
+                    ["Martin", "Denis"],
+                    ]
+                }
+            });
+        </script>
+    </body>
+</html>
